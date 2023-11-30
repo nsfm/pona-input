@@ -1,11 +1,11 @@
 import { Input } from "../input";
 import { Magnitude } from "../math";
-import { Momentary } from "./momentary";
+import { Button } from "./button";
 
 export class Trigger extends Input<Magnitude> {
   public state: Magnitude = 0;
 
-  public button: Momentary = new Momentary();
+  public button: Button = new Button();
 
   public get active(): boolean {
     return this.state > 0;

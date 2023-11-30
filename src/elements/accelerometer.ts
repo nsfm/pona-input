@@ -12,7 +12,7 @@ export interface AccelerometerParams extends InputParams {
   z?: AxisParams;
 }
 
-/** Tracks the linear acceleration of the controller. */
+/** Tracks the linear acceleration of the device. */
 export class Accelerometer extends Input<Accelerometer> {
   public readonly state: this = this;
 

@@ -1,4 +1,4 @@
-import { Momentary } from "./momentary";
+import { Button } from "./button";
 import { Input, InputParams } from "../input";
 
 export interface DpadParams extends InputParams {
@@ -11,18 +11,18 @@ export interface DpadParams extends InputParams {
 export class Dpad extends Input<Dpad> {
   public readonly state: this = this;
 
-  public readonly up: Momentary;
-  public readonly down: Momentary;
-  public readonly left: Momentary;
-  public readonly right: Momentary;
+  public readonly up: Button;
+  public readonly down: Button;
+  public readonly left: Button;
+  public readonly right: Button;
 
   constructor(params: DpadParams = {}) {
     super(params);
     const { up, down, left, right } = params;
-    this.up = new Momentary({ icon: "⮉", name: "Up", ...(up ?? {}) });
-    this.down = new Momentary({ icon: "⮋", name: "Down", ...(down ?? {}) });
-    this.left = new Momentary({ icon: "⮈", name: "Left", ...(left ?? {}) });
-    this.right = new Momentary({ icon: "⮊", name: "Right", ...(right ?? {}) });
+    this.up = new Button({ icon: "⮉", name: "Up", ...(up ?? {}) });
+    this.down = new Button({ icon: "⮋", name: "Down", ...(down ?? {}) });
+    this.left = new Button({ icon: "⮈", name: "Left", ...(left ?? {}) });
+    this.right = new Button({ icon: "⮊", name: "Right", ...(right ?? {}) });
   }
 
   public get active(): boolean {

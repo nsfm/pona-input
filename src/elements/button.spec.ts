@@ -1,13 +1,13 @@
 import { InputSet } from "../input";
-import { Momentary } from "./momentary";
+import { Button } from "./button";
 
 describe("Momentary", () => {
   it("should construct", () => {
-    expect(new Momentary({})).toBeInstanceOf(Momentary);
+    expect(new Button({})).toBeInstanceOf(Button);
   });
 
   it("should implement `active`", () => {
-    const button = new Momentary({});
+    const button = new Button({});
     expect(button.active).toEqual(false);
     button[InputSet](true);
     expect(button.active).toEqual(true);
@@ -16,7 +16,7 @@ describe("Momentary", () => {
   });
 
   it("should implement `state`", () => {
-    const button = new Momentary({});
+    const button = new Button({});
     expect(button.state).toEqual(false);
     button[InputSet](true);
     expect(button.state).toEqual(true);
@@ -25,7 +25,7 @@ describe("Momentary", () => {
   });
 
   it("should implement 'on `press`'", (done) => {
-    const button = new Momentary({});
+    const button = new Button({});
     button[InputSet](false);
     button.on("release", () => {
       fail();
@@ -39,7 +39,7 @@ describe("Momentary", () => {
   });
 
   it("should implement 'on `release`'", (done) => {
-    const button = new Momentary({});
+    const button = new Button({});
     button[InputSet](true);
     button.on("press", () => {
       fail();

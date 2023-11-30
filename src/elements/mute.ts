@@ -1,6 +1,6 @@
-import { Momentary } from "./momentary";
+import { Button } from "./button";
 
-export class Mute extends Momentary {
+export class Mute extends Button {
   public readonly indicator = {};
-  public readonly status = new Momentary({ icon: "!", name: "Status" });
+  public readonly status = new Button({ icon: "!", name: "Status" });
 }

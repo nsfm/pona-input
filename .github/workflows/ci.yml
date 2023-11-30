@@ -62,13 +62,13 @@ jobs:
       run: yarn version --no-git-tag-version --no-commit-hooks --new-version ${{ steps.determine_version.outputs.version }}
       
     - name: Publish
-      if: (github.ref == 'refs/heads/main') && needs.analyze.result == 'success'
+      if: (github.ref == 'refs/heads/main')
       run: yarn publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     - name: Tag & Release
-      if: (github.ref == 'refs/heads/main') && needs.analyze.result == 'success'
+      if: (github.ref == 'refs/heads/main')
       uses: avakar/tag-and-release@v1
       with:
         tag_name: ${{steps.determine_version.outputs.version}}

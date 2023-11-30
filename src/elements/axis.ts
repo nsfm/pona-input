@@ -1,11 +1,9 @@
 import { Input, InputParams } from "../input";
 import { Force, Magnitude } from "../math";
 
-/**
- * Configuration for an Axis input.
- */
+/** Configuration for an Axis input. */
 export interface AxisParams extends InputParams {
-  // Ignore input of magnitude less than or equal to this value
+  /** Ignore input of magnitude less than or equal to this value */
   deadzone?: Magnitude;
 }
 
@@ -16,9 +14,7 @@ export interface AxisParams extends InputParams {
 export class Axis extends Input<Force> {
   public state: Force = 0;
 
-  /**
-   * Ignores inputs of magnitude less than this value (0 to 1).
-   */
+  /** Ignore inputs of magnitude less than this value (0 to 1). */
   public deadzone: Magnitude = 0.05;
 
   constructor(params?: AxisParams) {
@@ -32,16 +28,12 @@ export class Axis extends Input<Force> {
     return Math.abs(this.state) > this.deadzone;
   }
 
-  /**
-   * Returns the axis position, ignoring the deadzone value.
-   */
+  /** Returns the axis position, ignoring the deadzone value. */
   public get force(): Force {
     return this.active ? this.state : 0;
   }
 
-  /**
-   * Returns an absolute axis position.
-   */
+  /** Returns an absolute axis position. */
   public get magnitude(): Magnitude {
     const magnitude = Math.abs(this.force);
     if (magnitude < this.deadzone) return 0;

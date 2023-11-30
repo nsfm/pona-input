@@ -3,15 +3,13 @@
  */
 
 export * from "./accelerometer";
-export * from "./analog";
 export * from "./axis";
+export * from "./button";
+export * from "./counter";
 export * from "./dpad";
 export * from "./gyroscope";
-export * from "./increment";
-export * from "./momentary";
-export * from "./motion";
+export * from "./joystick";
 export * from "./mute";
 export * from "./touch";
 export * from "./touchpad";
 export * from "./trigger";
-export * from "./unisense";

@@ -19,10 +19,10 @@ export class Dpad extends Input<Dpad> {
   constructor(params: DpadParams = {}) {
     super(params);
     const { up, down, left, right } = params;
-    this.up = new Button({ icon: "⮉", name: "Up", ...(up ?? {}) });
-    this.down = new Button({ icon: "⮋", name: "Down", ...(down ?? {}) });
-    this.left = new Button({ icon: "⮈", name: "Left", ...(left ?? {}) });
-    this.right = new Button({ icon: "⮊", name: "Right", ...(right ?? {}) });
+    this.up = new Button({ ...(up ?? {}) });
+    this.down = new Button({ ...(down ?? {}) });
+    this.left = new Button({ ...(left ?? {}) });
+    this.right = new Button({ ...(right ?? {}) });
   }
 
   public get active(): boolean {

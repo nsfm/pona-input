@@ -11,8 +11,6 @@ export type InputId = string;
 export interface InputParams {
   /** User-friendly name for the input */
   name?: string;
-  /** Icon representing the input */
-  icon?: string;
   /** Ignore changes numeric inputs less than this value */
   threshold?: number;
   /** Ignore numeric inputs below this value */
@@ -37,8 +35,6 @@ export const InputSetComparator = Symbol("InputSetComparator");
 export const InputSet = Symbol("InputSet");
 /** Symbol for accessing the name of an Input */
 export const InputName = Symbol("InputName");
-/** Symbole for accessing the icon of an Input */
-export const InputIcon = Symbol("InputIcon");
 
 /** Symbol for accessing an Input's event subscriber callbacks */
 const InputOns = Symbol("InputOns");
@@ -74,10 +70,9 @@ export abstract class Input<Type> implements AsyncIterator<Input<Type>> {
   private [InputOnces] = new Map<InputChangeType, InputCallback<this>[]>();
 
   constructor(params: InputParams = {}) {
-    const { name, icon, threshold, deadzone } = params;
+    const { name, threshold, deadzone } = params;
 
     if (name) this[InputName] = name;
-    if (icon) this[InputIcon] = icon;
     if (threshold) this.threshold = threshold;
     if (deadzone) this.deadzone = deadzone;
 
@@ -177,7 +172,7 @@ export abstract class Input<Type> implements AsyncIterator<Input<Type>> {
 
   /** Render a debugging string */
   public toString(): string {
-    return `${this[InputIcon]} [${this.active ? "X" : "_"}]`;
+    return `${this[InputName]} [${this.active ? "X" : "_"}]`;
   }
 
   /** Returns true if the provided state is worth an event */
@@ -199,9 +194,6 @@ export abstract class Input<Type> implements AsyncIterator<Input<Type>> {
 
   /** The name of this input */
   readonly [InputName]: string = "Unknown Input";
-
-  /** A short name for this input */
-  readonly [InputIcon]: string = "???";
 
   /** Other Inputs that contain this one */
   private [InputParents] = new Set<Input<unknown>>();

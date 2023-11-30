@@ -9,7 +9,6 @@ export * from "./counter";
 export * from "./dpad";
 export * from "./gyroscope";
 export * from "./joystick";
-export * from "./mute";
 export * from "./touch";
 export * from "./touchpad";
 export * from "./trigger";

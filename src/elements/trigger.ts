@@ -18,8 +18,4 @@ export class Trigger extends Input<Magnitude> {
   public get magnitude(): Magnitude {
     return this.state;
   }
-
-  public changes(state: Magnitude): boolean {
-    return this.state !== state;
-  }
 }

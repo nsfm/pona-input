@@ -25,20 +25,14 @@ export class Accelerometer extends Input<Accelerometer> {
     const { x, y, z } = params ?? {};
 
     this.x = new Axis({
-      icon: "AX",
-      name: "X",
       ...params,
       ...x,
     });
     this.y = new Axis({
-      icon: "AY",
-      name: "Y",
       ...params,
       ...y,
     });
     this.z = new Axis({
-      icon: "AZ",
-      name: "Z",
       ...params,
       ...z,
     });

@@ -24,24 +24,9 @@ export class Gyroscope extends Input<Gyroscope> {
     super(params);
     const { x, y, z } = params ?? {};
 
-    this.x = new Axis({
-      icon: "GX",
-      name: "X",
-      ...params,
-      ...x,
-    });
-    this.y = new Axis({
-      icon: "GY",
-      name: "Y",
-      ...params,
-      ...y,
-    });
-    this.z = new Axis({
-      icon: "GZ",
-      name: "Z",
-      ...params,
-      ...z,
-    });
+    this.x = new Axis({ ...params, ...x });
+    this.y = new Axis({ ...params, ...y });
+    this.z = new Axis({ ...params, ...z });
   }
 
   public readonly active = false;

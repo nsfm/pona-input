@@ -7,12 +7,7 @@ describe("Analog", () => {
   });
 
   it("should use params", () => {
-    const analog = new Joystick({
-      threshold: 5,
-      x: { icon: "?" },
-      y: { name: "?" },
-      button: { icon: "!" },
-    });
+    const analog = new Joystick({ threshold: 5 });
     expect(analog.threshold).toEqual(5);
   });
 

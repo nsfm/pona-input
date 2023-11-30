@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  ci:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'yarn'
+
+    - name: Set up CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: 'javascript'
+
+    - name: Install dependencies
+      run: yarn install
+    
+    - name: Lint
+      run: yarn lint
+    
+    - name: Test
+      run: yarn coverage
+
+    - name: Build
+      run: yarn build
+
+    - name: Analyze
+      uses: github/codeql-action/analyze@v2
+
+    - name: Calculate Version
+      id: determine_version
+      uses: paulhatch/semantic-version@v4.0.2
+      with:
+        bump_each_commit: true
+        short_tags: false
+        major_pattern: "MAJOR"
+        minor_pattern: "MINOR"
+        format: "${major}.${minor}.${patch}"
+     
+    - name: Set Version
+      run: yarn version --no-git-tag-version --no-commit-hooks --new-version ${{ steps.determine_version.outputs.version }}
+      
+    - name: Publish
+      if: (github.ref == 'refs/heads/main') && needs.analyze.result == 'success'
+      run: yarn publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - name: Tag & Release
+      if: (github.ref == 'refs/heads/main') && needs.analyze.result == 'success'
+      uses: avakar/tag-and-release@v1
+      with:
+        tag_name: ${{steps.determine_version.outputs.version}}
+        release_name: ${{steps.determine_version.outputs.version}}
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        
+  dependabot:
+    needs: [ci]
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' && needs.lint.result == 'success' && needs.test.result == 'success' && needs.analyze.result == 'success'
+    steps:
+      - name: Set up Dependabot
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
